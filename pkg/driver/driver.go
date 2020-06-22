@@ -1,13 +1,11 @@
 package driver
 
 import (
-	_ "database/sql"
 	"fmt"
 	"github.com/SantaPesca/baselib/pkg/utils"
 	"github.com/go-redis/redis/v7"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
-	_ "github.com/lib/pq"
 	"os"
 )
 
