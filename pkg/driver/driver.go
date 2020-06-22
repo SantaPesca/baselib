@@ -5,6 +5,7 @@ import (
 	"github.com/SantaPesca/baselib/pkg/utils"
 	"github.com/go-redis/redis/v7"
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"os"
 )
 
