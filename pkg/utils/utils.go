@@ -28,7 +28,7 @@ func RespondJSON(writer http.ResponseWriter, data interface{}) {
 	}
 }
 
-func genUUID() guuid.UUID {
+func GenUUID() guuid.UUID {
 	id := guuid.New()
 	return id
 }
