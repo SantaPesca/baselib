@@ -2,7 +2,7 @@ package utils
 
 import (
 	"encoding/json"
-	"github.com/SantaPesca/baselib/models"
+	"github.com/SantaPesca/baselib/pkg/models"
 	guuid "github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 	"log"
