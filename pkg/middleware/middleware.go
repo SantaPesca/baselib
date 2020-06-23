@@ -30,9 +30,7 @@ func (m Middleware) MiddleWare(next http.HandlerFunc, db *gorm.DB, rdb *redis.Cl
 			utils.MyLog.Println("Error in header (authHeader or bearerToken problem)")
 			utils.RespondWithError(writer, http.StatusBadRequest, e)
 			return
-		}
-
-		if len(bearerToken) == 2 {
+		} else {
 			token, err := jwt.Parse(bearerToken, func(token *jwt.Token) (interface{}, error) {
 				if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 					return nil, fmt.Errorf("there was an error")
@@ -65,10 +63,6 @@ func (m Middleware) MiddleWare(next http.HandlerFunc, db *gorm.DB, rdb *redis.Cl
 					return
 				}
 			}
-		} else {
-			e.Message = models.Unauthorized
-			utils.RespondWithError(writer, http.StatusUnauthorized, e)
-			return
 		}
 	}
 }
