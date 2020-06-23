@@ -11,7 +11,6 @@ import (
 	"github.com/lib/pq"
 	"net/http"
 	"os"
-	"strings"
 )
 
 type Middleware struct{}
@@ -24,9 +23,9 @@ func (m Middleware) MiddleWare(next http.HandlerFunc, db *gorm.DB, rdb *redis.Cl
 	return func(writer http.ResponseWriter, request *http.Request) {
 		var e models.Error
 		authHeader := request.Header.Get("Authorization")
-		bearerToken := strings.Split(authHeader, " ")
+		bearerString, bearerToken := utils.GetToken(authHeader)
 
-		if authHeader == "" || bearerToken[0] != "Bearer" || bearerToken[1] == "" {
+		if authHeader == "" || bearerString != "Bearer" || bearerToken == "" {
 			e.Message = models.BadRequest
 			utils.MyLog.Println("Error in header (authHeader or bearerToken problem)")
 			utils.RespondWithError(writer, http.StatusBadRequest, e)
@@ -34,8 +33,7 @@ func (m Middleware) MiddleWare(next http.HandlerFunc, db *gorm.DB, rdb *redis.Cl
 		}
 
 		if len(bearerToken) == 2 {
-			authToken := bearerToken[1]
-			token, err := jwt.Parse(authToken, func(token *jwt.Token) (interface{}, error) {
+			token, err := jwt.Parse(bearerToken, func(token *jwt.Token) (interface{}, error) {
 				if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 					return nil, fmt.Errorf("there was an error")
 				}
@@ -51,7 +49,7 @@ func (m Middleware) MiddleWare(next http.HandlerFunc, db *gorm.DB, rdb *redis.Cl
 
 			if token != nil {
 				if token.Valid && CheckPermissions(db, token, action, subject) {
-					getErr := rdb.Get(authToken).Err()
+					getErr := rdb.Get(bearerToken).Err()
 					if getErr == redis.Nil {
 						e.Message = models.Unauthorized
 						utils.RespondWithError(writer, http.StatusUnauthorized, e)

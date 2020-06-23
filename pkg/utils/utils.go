@@ -33,11 +33,14 @@ func GenUUID() guuid.UUID {
 	return id
 }
 
-func GetToken(authHeader string) string {
+func GetToken(authHeader string) (string, string) {
 	bearerToken := strings.Split(authHeader, " ")
-	authToken := bearerToken[1]
 
-	return authToken
+	if len(bearerToken) == 1 {
+		return bearerToken[0], ""
+	}
+
+	return bearerToken[0], bearerToken[1]
 }
 
 func HashPassword(password string) (string, error) {
