@@ -80,11 +80,11 @@ func CheckPermissions(db *gorm.DB, token *jwt.Token, action string, subject stri
 	claims := token.Claims.(jwt.MapClaims)
 	email := claims["email"]
 
-	// obtener el usuario con este email
+	// obtener los roles del usuario con este email
 	repo := repository.Repository{}
 	actions, subjects, err := repo.GetUserActionAndSubjectByEmail(db, email.(string))
 	if err != nil {
-		utils.MyLog.Println("Cannot get user by email: ", err)
+		utils.MyLog.Println("Cannot get user roles: ", err)
 		return false
 	}
 

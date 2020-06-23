@@ -6,7 +6,7 @@ type Repository struct{}
 
 func (r Repository) GetUserActionAndSubjectByEmail(db *gorm.DB, email string) ([]string, []string, error) {
 	var result Result
-	err := db.Table("users").Select("actions, subjects").Joins("JOIN roles ON users.id = roles.id").Where("users.email = ?", email).Scan(&result).Error
+	err := db.Table("users").Select("actions, subjects").Joins("JOIN roles ON users.role_id = roles.id").Where("users.email = ?", email).Scan(&result).Error
 
 	if err != nil {
 		return nil, nil, err
