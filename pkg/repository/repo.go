@@ -1,6 +1,9 @@
 package repository
 
-import "github.com/jinzhu/gorm"
+import (
+	"github.com/jinzhu/gorm"
+	"github.com/lib/pq"
+)
 
 type Repository struct{}
 
@@ -16,6 +19,6 @@ func (r Repository) GetUserActionAndSubjectByEmail(db *gorm.DB, email string) ([
 }
 
 type Result struct {
-	Actions  []string
-	Subjects []string
+	Actions  pq.StringArray
+	Subjects pq.StringArray
 }
