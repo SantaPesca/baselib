@@ -25,10 +25,6 @@ func (m Middleware) MiddleWare(next http.HandlerFunc, db *gorm.DB, rdb *redis.Cl
 		authHeader := request.Header.Get("Authorization")
 		bearerString, bearerToken := utils.GetToken(authHeader)
 
-		utils.MyLog.Println("authHeader: ", authHeader)
-		utils.MyLog.Println("bearerString: ", bearerString)
-		utils.MyLog.Println("bearerToken: ", bearerToken)
-
 		if authHeader == "" || bearerString != "Bearer" || bearerToken == "" {
 			e.Message = models.BadRequest
 			utils.MyLog.Println("Error in header (authHeader or bearerToken problem)")
