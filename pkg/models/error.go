@@ -4,6 +4,7 @@ type HTTPError string
 
 const (
 	SignupBadRequest           HTTPError = "SIGNUP_BAD_REQUEST"
+	JWTBadRequest              HTTPError = "JWT_BAD_REQUEST"
 	LoginUnauthorized          HTTPError = "LOGIN_UNAUTHORIZED"
 	Unauthorized               HTTPError = "UNAUTHORIZED"
 	BadRequest                 HTTPError = "BAD_REQUEST"
