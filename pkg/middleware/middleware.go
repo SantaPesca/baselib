@@ -39,9 +39,9 @@ func (m Middleware) MiddleWare(next http.HandlerFunc, db *gorm.DB, rdb *redis.Cl
 			})
 
 			if err != nil {
-				e.Message = models.InternalServerError
+				e.Message = models.Unauthorized
 				utils.MyLog.Println("An error occurred signing the token: ", err)
-				utils.RespondWithError(writer, http.StatusInternalServerError, e)
+				utils.RespondWithError(writer, http.StatusUnauthorized, e)
 				return
 			}
 
