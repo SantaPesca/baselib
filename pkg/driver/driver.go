@@ -1,12 +1,16 @@
 package driver
 
 import (
+	"context"
 	"fmt"
 	"github.com/SantaPesca/baselib/pkg/utils"
 	"github.com/go-redis/redis/v7"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"os"
+	"time"
 )
 
 func ConnectDB() *gorm.DB {
@@ -38,4 +42,18 @@ func ConnectRedisDB() *redis.Client {
 	fmt.Println("Successfully connected to Redis!")
 
 	return rdb
+}
+
+func ConnectMongoDB() (*mongo.Client, context.Context) {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+	mdb, err := mongo.Connect(ctx, options.Client().ApplyURI("MONGO_URL"))
+
+	if err != nil {
+		utils.MyLog.Fatalf("Cannot connect to Mongo: %v", err)
+	}
+
+	fmt.Println("Successfully connected to Mongo!")
+
+	return mdb, ctx
 }
