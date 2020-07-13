@@ -47,7 +47,7 @@ func ConnectRedisDB() *redis.Client {
 func ConnectMongoDB() (*mongo.Client, context.Context) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	mdb, err := mongo.Connect(ctx, options.Client().ApplyURI("MONGO_URL"))
+	mdb, err := mongo.Connect(ctx, options.Client().ApplyURI(os.Getenv("MONGO_URL")))
 
 	if err != nil {
 		utils.MyLog.Fatalf("Cannot connect to Mongo: %v", err)
