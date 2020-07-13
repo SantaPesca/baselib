@@ -6,6 +6,8 @@ import (
 	"github.com/go-redis/redis/v7"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"os"
 )
 
@@ -38,4 +40,14 @@ func ConnectRedisDB() *redis.Client {
 	fmt.Println("Successfully connected to Redis!")
 
 	return rdb
+}
+
+func ConnectMongoDB() *mongo.Client {
+	mdb, err := mongo.NewClient(options.Client().ApplyURI("MONGO_URL"))
+
+	if err != nil {
+		utils.MyLog.Fatalf("Cannot connect to Mongo: %v", err)
+	}
+
+	return mdb
 }
