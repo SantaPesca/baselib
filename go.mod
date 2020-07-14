@@ -3,6 +3,7 @@ module github.com/SantaPesca/baselib
 go 1.14
 
 require (
+	github.com/Kamva/mgm/v3 v3.0.1
 	github.com/denisenkom/go-mssqldb v0.0.0-20200206145737-bbfc9a55622e // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/go-redis/redis/v7 v7.4.0
