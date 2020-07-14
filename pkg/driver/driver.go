@@ -1,7 +1,6 @@
 package driver
 
 import (
-	"context"
 	"fmt"
 	"github.com/Kamva/mgm/v3"
 	"github.com/SantaPesca/baselib/pkg/utils"
@@ -43,7 +42,7 @@ func ConnectRedisDB() *redis.Client {
 	return rdb
 }
 
-func ConnectMongoDB(ctx context.Context) {
+func ConnectMongoDB() {
 	//mdb, err := mongo.Connect(ctx, options.Client().ApplyURI(os.Getenv("MONGO_URL")))
 	//
 	//if err != nil {
