@@ -44,6 +44,8 @@ func ConnectRedisDB() *redis.Client {
 
 func ConnectMongoDB() {
 	err := mgm.SetDefaultConfig(nil, "santapesca", options.Client().ApplyURI(os.Getenv("MONGO_URL")))
+	_, client, _, err := mgm.DefaultConfigs()
+	err = client.Ping(mgm.Ctx(), nil)
 	if err != nil {
 		utils.MyLog.Fatalf("Cannot connect to Mongo: %v", err)
 	}
