@@ -9,6 +9,7 @@ require (
 	github.com/google/uuid v1.1.2
 	github.com/jinzhu/gorm v1.9.16
 	github.com/lib/pq v1.8.0
+	github.com/spf13/viper v1.7.1
 	go.mongodb.org/mongo-driver v1.4.0
 	golang.org/x/crypto v0.0.0-20200820211705-5c72a883971a
 )

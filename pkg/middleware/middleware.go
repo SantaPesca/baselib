@@ -9,8 +9,8 @@ import (
 	"github.com/go-redis/redis/v7"
 	"github.com/jinzhu/gorm"
 	"github.com/lib/pq"
+	"github.com/spf13/viper"
 	"net/http"
-	"os"
 )
 
 type Middleware struct{}
@@ -35,7 +35,7 @@ func (m Middleware) MiddleWare(next http.HandlerFunc, db *gorm.DB, rdb *redis.Cl
 				if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 					return nil, fmt.Errorf("there was an error")
 				}
-				return []byte(os.Getenv("SECRET")), nil
+				return []byte(viper.GetString("secret.jwt")), nil
 			})
 
 			if err != nil {

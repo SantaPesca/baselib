@@ -7,12 +7,12 @@ import (
 	"github.com/go-redis/redis/v7"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/spf13/viper"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"os"
 )
 
 func ConnectDB() *gorm.DB {
-	db, err := gorm.Open("postgres", os.Getenv("POSTGRES_URL"))
+	db, err := gorm.Open("postgres", viper.Get("postgres.url"))
 
 	if err != nil {
 		utils.MyLog.Fatalf("Cannot connect to Postgres: %v", err)
@@ -27,7 +27,7 @@ func ConnectDB() *gorm.DB {
 
 func ConnectRedisDB() *redis.Client {
 	rdb := redis.NewClient(&redis.Options{
-		Addr:     os.Getenv("REDIS_URL"),
+		Addr:     viper.GetString("redis.url"),
 		Password: "", // no password set
 		DB:       0,  // use default DB
 	})
@@ -43,7 +43,7 @@ func ConnectRedisDB() *redis.Client {
 }
 
 func ConnectMongoDB() {
-	err := mgm.SetDefaultConfig(nil, "santapesca", options.Client().ApplyURI(os.Getenv("MONGO_URL")))
+	err := mgm.SetDefaultConfig(nil, "santapesca", options.Client().ApplyURI(viper.GetString("mongo.url")))
 	_, client, _, err := mgm.DefaultConfigs()
 	err = client.Ping(mgm.Ctx(), nil)
 	if err != nil {
