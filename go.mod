@@ -1,6 +1,6 @@
 module github.com/SantaPesca/baselib
 
-go 1.14
+go 1.15
 
 require (
 	github.com/Kamva/mgm/v3 v3.0.1
@@ -10,6 +10,6 @@ require (
 	github.com/jinzhu/gorm v1.9.16
 	github.com/lib/pq v1.8.0
 	github.com/spf13/viper v1.7.1
-	go.mongodb.org/mongo-driver v1.4.0
+	go.mongodb.org/mongo-driver v1.4.1
 	golang.org/x/crypto v0.0.0-20200820211705-5c72a883971a
 )
