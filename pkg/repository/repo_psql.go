@@ -5,9 +5,9 @@ import (
 	"github.com/lib/pq"
 )
 
-type Repository struct{}
+type PostgresRepository struct{}
 
-func (r Repository) GetUserActionAndSubjectByEmail(db *gorm.DB, email string) ([]string, []string, error) {
+func (r PostgresRepository) GetUserActionAndSubjectByEmail(db *gorm.DB, email string) ([]string, []string, error) {
 	var result Result
 	err := db.Table("users").Select("actions, subjects").Joins("JOIN roles ON users.role_id = roles.id").Where("users.email = ?", email).Scan(&result).Error
 

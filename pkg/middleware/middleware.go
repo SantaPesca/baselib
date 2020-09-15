@@ -22,6 +22,8 @@ para acceder al controller y que el JWT es correcto
 func (m Middleware) MiddleWare(next http.HandlerFunc, db *gorm.DB, rdb *redis.Client, action string, subject string) http.HandlerFunc {
 	return func(writer http.ResponseWriter, request *http.Request) {
 		var e models.Error
+		redisRepo := repository.RedisRepository{}
+
 		authHeader := request.Header.Get("Authorization")
 		bearerString, bearerToken := utils.GetToken(authHeader)
 
@@ -47,7 +49,7 @@ func (m Middleware) MiddleWare(next http.HandlerFunc, db *gorm.DB, rdb *redis.Cl
 
 			if token != nil {
 				if token.Valid && CheckPermissions(db, token, action, subject) {
-					getErr := rdb.Get(bearerToken).Err()
+					getErr := redisRepo.CheckIfTokenExists(rdb, bearerToken)
 					if getErr == redis.Nil {
 						e.Message = models.Unauthorized
 						utils.RespondWithError(writer, http.StatusUnauthorized, e)
@@ -73,8 +75,8 @@ func CheckPermissions(db *gorm.DB, token *jwt.Token, action string, subject stri
 	email := claims["email"]
 
 	// obtener los roles del usuario con este email
-	repo := repository.Repository{}
-	actions, subjects, err := repo.GetUserActionAndSubjectByEmail(db, email.(string))
+	postgresRepo := repository.PostgresRepository{}
+	actions, subjects, err := postgresRepo.GetUserActionAndSubjectByEmail(db, email.(string))
 	if err != nil {
 		utils.MyLog.Println("Cannot get user roles: ", err)
 		return false
