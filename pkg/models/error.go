@@ -9,6 +9,7 @@ const (
 	Unauthorized               HTTPError = "UNAUTHORIZED"
 	BadRequest                 HTTPError = "BAD_REQUEST"
 	InternalServerError        HTTPError = "INTERNAL_SERVER_ERROR"
+	UserPhotoUploadError       HTTPError = "USER_PHOTO_UPLOAD_ERROR"
 	ShopForbidden              HTTPError = "SHOP_FORBBIDEN"
 	TemporalFolderNotFound     HTTPError = "TEMPORALFOLDER_NOT_FOUND"
 	TemporalPhotoNotFound      HTTPError = "TEMPORALPHOTO_NOT_FOUND"
