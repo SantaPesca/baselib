@@ -14,6 +14,8 @@ const (
 	TemporalFolderNotFound     HTTPError = "TEMPORALFOLDER_NOT_FOUND"
 	TemporalPhotoNotFound      HTTPError = "TEMPORALPHOTO_NOT_FOUND"
 	RecoveryPasswordBadRequest HTTPError = "RECOVERY_PASSWORD_BAD_REQUEST"
+	NoMorePostsFound           HTTPError = "NO_MORE_POSTS_FOUND"
+	LatestPostsFound           HTTPError = "LATEST_POSTS_FOUND"
 )
 
 type Error struct {
