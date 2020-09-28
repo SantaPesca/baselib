@@ -8,7 +8,10 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/spf13/viper"
+	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/x/bsonx"
+	"time"
 )
 
 func ConnectDB() *gorm.DB {
@@ -49,5 +52,25 @@ func ConnectMongoDB() {
 	if err != nil {
 		utils.MyLog.Fatalf("Cannot connect to Mongo: %v", err)
 	}
+
+	db := client.Database("santapesca")
+	indexOpts := options.CreateIndexes().
+		SetMaxTime(time.Second * 10)
+
+	// Index to location 2dsphere type.
+	locationIndexModel := mongo.IndexModel{
+		Options: options.Index().SetBackground(true),
+		Keys:    bsonx.MDoc{"location": bsonx.String("2dsphere")},
+	}
+	pointIndexes := db.Collection("posts").Indexes()
+	_, err = pointIndexes.CreateOne(
+		mgm.Ctx(),
+		locationIndexModel,
+		indexOpts,
+	)
+	if err != nil {
+		utils.MyLog.Fatalf("Cannot create index: %v", err)
+	}
+
 	fmt.Println("Successfully connected to Mongo!")
 }
