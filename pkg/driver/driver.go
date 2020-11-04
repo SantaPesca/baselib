@@ -8,6 +8,7 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/spf13/viper"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/x/bsonx"
@@ -57,19 +58,30 @@ func ConnectMongoDB() {
 	indexOpts := options.CreateIndexes().
 		SetMaxTime(time.Second * 10)
 
-	// Index to location 2dsphere type.
+	// Index to location 2dsphere type
 	locationIndexModel := mongo.IndexModel{
-		Options: options.Index().SetBackground(true),
-		Keys:    bsonx.MDoc{"location": bsonx.String("2dsphere")},
+		Keys: bsonx.MDoc{"location": bsonx.String("2dsphere")},
 	}
-	pointIndexes := db.Collection("posts").Indexes()
-	_, err = pointIndexes.CreateOne(
+	_, err = db.Collection("posts").Indexes().CreateOne(
 		mgm.Ctx(),
 		locationIndexModel,
 		indexOpts,
 	)
 	if err != nil {
-		utils.MyLog.Fatalf("Cannot create index: %v", err)
+		utils.MyLog.Fatalf("Cannot create 2dsphere index: %v", err)
+	}
+
+	// Index to user_id
+	userIdIndexModel := mongo.IndexModel{
+		Keys: bson.M{"user_id": 1},
+	}
+	_, err = db.Collection("user_photos").Indexes().CreateOne(
+		mgm.Ctx(),
+		userIdIndexModel,
+		indexOpts,
+	)
+	if err != nil {
+		utils.MyLog.Fatalf("Cannot create user_id index: %v", err)
 	}
 
 	fmt.Println("Successfully connected to Mongo!")
