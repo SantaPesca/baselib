@@ -2,11 +2,11 @@ package driver
 
 import (
 	"fmt"
-	"github.com/Kamva/mgm/v3"
 	"github.com/SantaPesca/baselib/pkg/utils"
 	"github.com/go-redis/redis/v7"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/kamva/mgm/v3"
 	"github.com/spf13/viper"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
