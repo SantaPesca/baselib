@@ -1,9 +1,10 @@
 package driver
 
 import (
+	"context"
 	"fmt"
 	"github.com/SantaPesca/baselib/pkg/utils"
-	"github.com/go-redis/redis/v7"
+	"github.com/go-redis/redis/v8"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/kamva/mgm/v3"
@@ -36,7 +37,7 @@ func ConnectRedisDB() *redis.Client {
 		DB:       0,  // use default DB
 	})
 
-	err := rdb.Ping().Err()
+	err := rdb.Ping(context.Background()).Err()
 	if err != nil {
 		utils.MyLog.Fatalf("Cannot connect to Redis: %v", err)
 	}
