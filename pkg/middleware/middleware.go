@@ -6,7 +6,7 @@ import (
 	"github.com/SantaPesca/baselib/pkg/repository"
 	"github.com/SantaPesca/baselib/pkg/utils"
 	"github.com/dgrijalva/jwt-go"
-	"github.com/go-redis/redis/v7"
+	"github.com/go-redis/redis/v8"
 	"github.com/jinzhu/gorm"
 	"github.com/lib/pq"
 	"github.com/spf13/viper"
