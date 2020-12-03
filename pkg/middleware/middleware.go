@@ -19,7 +19,7 @@ type Middleware struct{}
 para acceder al controller y que el JWT es correcto
 */
 
-func (m Middleware) MiddleWare(next http.HandlerFunc, db *gorm.DB, rdb *redis.Client, action string, subject string) http.HandlerFunc {
+func (m Middleware) MiddleWare(next http.HandlerFunc, db *gorm.DB, rdb redis.Cmdable, action string, subject string) http.HandlerFunc {
 	return func(writer http.ResponseWriter, request *http.Request) {
 		var e models.Error
 		redisRepo := repository.RedisRepository{}

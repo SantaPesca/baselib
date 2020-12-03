@@ -7,6 +7,6 @@ import (
 
 type RedisRepository struct{}
 
-func (u RedisRepository) CheckIfTokenExists(rdb *redis.Client, token string) error {
+func (u RedisRepository) CheckIfTokenExists(rdb redis.Cmdable, token string) error {
 	return rdb.Get(context.Background(), token).Err()
 }
