@@ -16,6 +16,7 @@ const (
 	RecoveryPasswordBadRequest HTTPError = "RECOVERY_PASSWORD_BAD_REQUEST"
 	NoMorePostsFound           HTTPError = "NO_MORE_POSTS_FOUND"
 	NotFound                   HTTPError = "NOT_FOUND"
+	PostNotAllowComments       HTTPError = "POST_NOT_ALLOW_COMMENTS"
 )
 
 type Error struct {
