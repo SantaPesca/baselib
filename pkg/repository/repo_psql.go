@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"github.com/jinzhu/gorm"
 	"github.com/lib/pq"
+	"gorm.io/gorm"
 )
 
 type PostgresRepository struct{}
