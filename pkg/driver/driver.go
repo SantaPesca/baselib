@@ -5,25 +5,23 @@ import (
 	"fmt"
 	"github.com/SantaPesca/baselib/pkg/utils"
 	"github.com/go-redis/redis/v8"
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/kamva/mgm/v3"
 	"github.com/spf13/viper"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/x/bsonx"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 	"time"
 )
 
 func ConnectDB() *gorm.DB {
-	db, err := gorm.Open("postgres", viper.Get("postgres.url"))
+	db, err := gorm.Open(postgres.Open(viper.GetString("postgres.url")), &gorm.Config{})
 
 	if err != nil {
 		utils.MyLog.Fatalf("Cannot connect to Postgres: %v", err)
 	}
-
-	db.LogMode(false)
 
 	fmt.Println("Successfully connected to Postgres!")
 
