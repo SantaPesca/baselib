@@ -19,6 +19,6 @@ func (r PostgresRepository) GetUserActionAndSubjectByEmail(db *gorm.DB, email st
 }
 
 type Result struct {
-	Actions  pq.StringArray
-	Subjects pq.StringArray
+	Actions  pq.StringArray `gorm:"type:text[]"`
+	Subjects pq.StringArray `gorm:"type:text[]"`
 }
