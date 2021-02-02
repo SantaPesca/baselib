@@ -53,9 +53,13 @@ func (m Middleware) MiddleWare(next http.HandlerFunc, db *gorm.DB, rdb redis.Cmd
 					if getErr == redis.Nil {
 						e.Message = models.Unauthorized
 						utils.RespondWithError(writer, http.StatusUnauthorized, e)
+						utils.MyLog.Println("Bearer token not exists in redis: ", getErr)
 						return
 					} else if getErr != nil {
-						panic(getErr)
+						e.Message = models.InternalServerError
+						utils.RespondWithError(writer, http.StatusInternalServerError, e)
+						utils.MyLog.Println("Error checking token in redis: ", getErr)
+						return
 					} else {
 						next.ServeHTTP(writer, request)
 					}
