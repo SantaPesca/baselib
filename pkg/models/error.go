@@ -18,6 +18,7 @@ const (
 	NotFound                       HTTPError = "NOT_FOUND"
 	PostNotAllowComments           HTTPError = "POST_NOT_ALLOW_COMMENTS"
 	UserHasAlreadyReviewedThisShop HTTPError = "USER_ALREADY_MAKE_A_REVIEW_OF_THIS_SHOP"
+	PaginationError                HTTPError = "PAGINATION_ERROR_PAGE_OR_PAGESIZE_ARE_NULL"
 )
 
 type Error struct {
