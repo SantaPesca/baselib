@@ -21,6 +21,8 @@ const (
 	PaginationError                HTTPError = "PAGINATION_ERROR_PAGE_OR_PAGESIZE_ARE_NULL"
 	UserAlreadyLikedPost           HTTPError = "USER_ALREADY_LIKED_THE_POST"
 	UserNotLikedPost               HTTPError = "USER_NOT_LIKED_THE_POST"
+	UserAlreadyLikedComment        HTTPError = "USER_ALREADY_LIKED_THE_COMMENT"
+	UserNotLikedComment            HTTPError = "USER_NOT_LIKED_THE_COMMENT"
 )
 
 type Error struct {
