@@ -10,7 +10,7 @@ require (
 	github.com/lib/pq v1.10.2
 	github.com/spf13/viper v1.8.1
 	go.mongodb.org/mongo-driver v1.7.0
-	golang.org/x/crypto v0.0.0-20210711020723-a769d52b0f97
+	golang.org/x/crypto v0.1.0
 	gorm.io/driver/postgres v1.1.0
 	gorm.io/gorm v1.21.12
 )
